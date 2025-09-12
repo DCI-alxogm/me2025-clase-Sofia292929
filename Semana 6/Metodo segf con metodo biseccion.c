@@ -1,3 +1,4 @@
+//Metodo de biseccion para la segunda funcion 
 #include <stdio.h>
 #include <math.h>
 

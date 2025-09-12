@@ -10,7 +10,7 @@ float f(float c) {
 int main() {
     float a = 4, b = 20;  // intervalo inicial
     float k = 0, k_old = 0;
-    float err, err_max = 1e-6f;  // tolerancia
+    float err, err_max = 0.0001;  // tolerancia
     int iter = 0;
 
     do {
@@ -22,6 +22,7 @@ int main() {
             a = k;
 
         err = fabsf(k - k_old);
+        printf("%-6d | %-8f |%-8f |%-8f |%-8f \n", iter, k_old, k, err);
 
         iter++;
     } while (err > err_max);

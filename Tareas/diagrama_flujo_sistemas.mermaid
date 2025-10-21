@@ -1,0 +1,48 @@
+flowchart TD
+    A([Inicio]) --> B[Mostrar menú de métodos]
+    B --> C[Leer método seleccionado]
+    C --> D{¿Leer desde archivo?}
+    
+    D -->|Sí| E[Leer nombre de archivo]
+    E --> F[Abrir archivo y leer matriz A y dimensión N]
+    F --> G[Cerrar archivo]
+    
+    D -->|No| H[Leer dimensión N]
+    H --> I[Leer elementos de matriz A coeficientes y vector b]
+    
+    G --> J[Imprimir matriz aumentada original]
+    I --> J
+    
+    J --> K[Evaluar condición del sistema]
+    K --> L{¿Pivotes pequeños?}
+    L -->|Sí| M[Mostrar advertencia]
+    L -->|No| N{¿Qué método?}
+    M --> N
+    
+    N -->|Gauss Simple| O[Llamar gaussSimple]
+    N -->|Gauss-Jordan| P[Llamar gaussJordan]
+    N -->|Otro| Q[Mostrar error]
+    Q --> R([Fin])
+    
+    O --> S[Fase de eliminación:<br/>Triangular superior]
+    S --> T[Sustitución regresiva]
+    T --> U[Obtener vector solución x]
+    
+    P --> V[Normalizar fila pivote]
+    V --> W[Eliminar hacia arriba<br/>y hacia abajo]
+    W --> X{¿Todas las filas<br/>procesadas?}
+    X -->|No| V
+    X -->|Sí| Y[Leer soluciones<br/>de última columna]
+    
+    U --> Z[Imprimir soluciones x1, x2, ..., xN]
+    Y --> Z
+    Z --> R
+    
+    style A fill:#e1f5e1
+    style R fill:#ffe1e1
+    style O fill:#e1e5ff
+    style P fill:#e1e5ff
+    style S fill:#fff4e1
+    style T fill:#fff4e1
+    style V fill:#fff4e1
+    style W fill:#fff4e1

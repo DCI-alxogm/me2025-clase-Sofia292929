@@ -1,0 +1,83 @@
+flowchart TD
+    Start([Inicio]) --> ShowMenu[Mostrar menú de métodos:<br/>1. Gauss Simple<br/>2. Gauss-Jordan<br/>3. Gauss-Seidel<br/>4. Factorización LU]
+    ShowMenu --> SelectMethod[/Seleccionar método 1-4/]
+    SelectMethod --> AskFile{¿Leer desde<br/>archivo?}
+    
+    AskFile -->|Sí| InputFile[/Ingresar nombre<br/>de archivo/]
+    InputFile --> ReadFile[Leer matriz desde archivo]
+    ReadFile --> PrintMatrix
+    
+    AskFile -->|No| InputN[/Ingresar dimensión N/]
+    InputN --> InputMatrix[/Ingresar coeficientes<br/>de matriz aumentada A|B/]
+    InputMatrix --> PrintMatrix
+    
+    PrintMatrix[Imprimir matriz original]
+    PrintMatrix --> EvalCondition[Evaluar condición del sistema<br/>Verificar pivotes pequeños]
+    EvalCondition --> ChooseMethod{Método<br/>seleccionado}
+    
+    ChooseMethod -->|1| GaussSimple[GAUSS SIMPLE]
+    ChooseMethod -->|2| GaussJordan[GAUSS-JORDAN]
+    ChooseMethod -->|3| GaussSeidel[GAUSS-SEIDEL]
+    ChooseMethod -->|4| LU[FACTORIZACIÓN LU]
+    
+    %% Gauss Simple
+    GaussSimple --> GS1[k = 0 hasta N-2]
+    GS1 --> GS2{¿Pivote pequeño<br/>A[k][k]?}
+    GS2 -->|Sí| GS3[Pivoteo parcial]
+    GS2 -->|No| GS4
+    GS3 --> GS4[Eliminación hacia adelante:<br/>i = k+1 hasta N-1]
+    GS4 --> GS5[factor = A[i][k]/A[k][k]]
+    GS5 --> GS6[A[i][j] -= factor × A[k][j]<br/>para j = k hasta N]
+    GS6 --> GS7{¿Más filas?}
+    GS7 -->|Sí| GS4
+    GS7 -->|No| GS8{¿Más columnas?}
+    GS8 -->|Sí| GS1
+    GS8 -->|No| GS9[Sustitución hacia atrás:<br/>Calcular x[i] desde i=N-1 hasta 0]
+    GS9 --> ShowSolution
+    
+    %% Gauss-Jordan
+    GaussJordan --> GJ1[i = 0 hasta N-1]
+    GJ1 --> GJ2{¿Pivote pequeño<br/>A[i][i]?}
+    GJ2 -->|Sí| GJ3[Pivoteo parcial]
+    GJ2 -->|No| GJ4
+    GJ3 --> GJ4[Normalizar fila i:<br/>A[i][j] /= A[i][i]]
+    GJ4 --> GJ5[Eliminar columna i en todas<br/>las demás filas k ≠ i]
+    GJ5 --> GJ6[factor = A[k][i]<br/>A[k][j] -= factor × A[i][j]]
+    GJ6 --> GJ7{¿Más filas<br/>pivote?}
+    GJ7 -->|Sí| GJ1
+    GJ7 -->|No| GJ8[Extraer solución:<br/>x[i] = A[i][N]]
+    GJ8 --> ShowSolution
+    
+    %% Gauss-Seidel
+    GaussSeidel --> GSe1[Inicializar x[i] = 0<br/>iter = 0, error = 0]
+    GSe1 --> GSe2[Guardar x_prev[i] = x[i]]
+    GSe2 --> GSe3[Para cada ecuación i:<br/>suma = Σ A[i][j]×x[j] para j≠i]
+    GSe3 --> GSe4[x[i] = A[i][N] - suma / A[i][i]]
+    GSe4 --> GSe5[error += |x[i] - x_prev[i]|]
+    GSe5 --> GSe6[iter++]
+    GSe6 --> GSe7{error > TOL<br/>AND<br/>iter < MAX_ITER?}
+    GSe7 -->|Sí| GSe2
+    GSe7 -->|No| GSe8[Mostrar número<br/>de iteraciones]
+    GSe8 --> ShowSolution
+    
+    %% Factorización LU
+    LU --> LU1[Inicializar L, U, y]
+    LU1 --> LU2[Extraer vector b = A[i][N]]
+    LU2 --> LU3[Descomposición LU Doolittle:<br/>Calcular matrices L y U]
+    LU3 --> LU4[Para i = 0 hasta N-1:<br/>Calcular U[i][k] y L[k][i]]
+    LU4 --> LU5[Imprimir matriz L]
+    LU5 --> LU6[Imprimir matriz U]
+    LU6 --> LU7[Sustitución hacia adelante:<br/>Resolver Ly = b]
+    LU7 --> LU8[Sustitución hacia atrás:<br/>Resolver Ux = y]
+    LU8 --> ShowSolution
+    
+    ShowSolution[Mostrar solución:<br/>x1, x2, ..., xN]
+    ShowSolution --> End([Fin])
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style GaussSimple fill:#87CEEB
+    style GaussJordan fill:#DDA0DD
+    style GaussSeidel fill:#F0E68C
+    style LU fill:#FFA07A
+    style ShowSolution fill:#98FB98

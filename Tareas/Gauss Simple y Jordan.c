@@ -92,7 +92,7 @@ void imprimirMatriz(float A[MAX][MAX+1], int N) {
 void evaluarCondicion(float A[MAX][MAX+1], int N) {
     for (int i = 0; i < N; i++) {
         if (fabs(A[i][i]) < 1e-6) {
-            printf("\n⚠️ El sistema podría estar mal condicionado (pivote pequeño en fila %d)\n", i + 1);
+            printf("\nEl sistema podría estar mal condicionado (pivote pequeño en fila %d)\n", i + 1);
         }
     }
 }
@@ -113,7 +113,7 @@ void pivoteoParcial(float A[MAX][MAX+1], int N, int k) {
             A[k][j] = A[fila_pivote][j];
             A[fila_pivote][j] = temp;
         }
-        printf("\n↔️ Se realizó pivoteo: se intercambió fila %d con fila %d\n", k + 1, fila_pivote + 1);
+        printf("\nSe realizó pivoteo: se intercambió fila %d con fila %d\n", k + 1, fila_pivote + 1);
     }
 }
 
@@ -169,3 +169,4 @@ void gaussJordan(float A[MAX][MAX+1], int N, float x[MAX]) {
         x[i] = A[i][N];
     }
 }
+

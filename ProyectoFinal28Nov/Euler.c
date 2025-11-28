@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+// ==== EDITA ESTA FUNCIÓN PARA DEFINIR TU EDO ====
+// Ejemplo: y' = x + y
+double f(double x, double y) {
+    return x + y;
+}
+
+int main() {
+    double x0, y0, h;
+    int n;
+
+    printf("=== Metodo de Euler ===\n");
+    printf("Ingresa x0: ");
+    scanf("%lf", &x0);
+
+    printf("Ingresa y0: ");
+    scanf("%lf", &y0);
+
+    printf("Ingresa tamano de paso h: ");
+    scanf("%lf", &h);
+
+    printf("Ingresa numero de iteraciones: ");
+    scanf("%d", &n);
+
+    double x = x0;
+    double y = y0;
+
+    printf("\nIter\t x\t\t y\n");
+    printf("--------------------------------------\n");
+    printf("0\t %.6f\t %.6f\n", x, y);
+
+    for (int i = 1; i <= n; i++) {
+        y = y + h * f(x, y);
+        x = x + h;
+
+        printf("%d\t %.6f\t %.6f\n", i, x, y);
+    }
+
+    return 0;
+}
